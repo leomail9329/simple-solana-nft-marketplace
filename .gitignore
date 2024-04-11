@@ -1,0 +1,12 @@
+
+.anchor
+.DS_Store
+target
+**/*.rs.bk
+node_modules
+test-ledger
+.next
+app/contract_testing/node_modules
+app/contract_testing/.env
+app/contract-testing/node_modules
+app/contract-testing/.env

@@ -1,0 +1,442 @@
+{
+  "version": "0.1.0",
+  "name": "marketplace_sol",
+  "instructions": [
+    {
+      "name": "list",
+      "accounts": [
+        {
+          "name": "listingState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "seller",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "nftMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "nftMetadata",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "sellerNftAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "prgramNftAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgramId",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "allowedRoyalty",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "updateListing",
+      "accounts": [
+        {
+          "name": "listingState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "seller",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "nftMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "nftMetadata",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "allowedRoyalty",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "cancelListing",
+      "accounts": [
+        {
+          "name": "listingState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "seller",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "nftMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "nftMetadata",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "sellerNftAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "prgramNftAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "programNftPdaOwner",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgramId",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "buyNow",
+      "accounts": [
+        {
+          "name": "listingState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "seller",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nftMetadata",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "buyer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "prgramNftAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "buyerNftAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "programNftPdaOwner",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgramId",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "endDayTimestamp",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "fundWithdrawPdaWallet",
+      "accounts": [
+        {
+          "name": "userPdaWallet",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "mode",
+          "type": "u8"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "ListingState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "isSold",
+            "type": "bool"
+          },
+          {
+            "name": "allowedRoyalty",
+            "type": "u16"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "seller",
+            "type": "publicKey"
+          },
+          {
+            "name": "nftMetadata",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OfferState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "isExpired",
+            "type": "bool"
+          },
+          {
+            "name": "endtime",
+            "type": "u64"
+          },
+          {
+            "name": "offeredAmount",
+            "type": "u64"
+          },
+          {
+            "name": "buyer",
+            "type": "publicKey"
+          },
+          {
+            "name": "listingState",
+            "type": "publicKey"
+          },
+          {
+            "name": "seller",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DirectOfferState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "isExpired",
+            "type": "bool"
+          },
+          {
+            "name": "endtime",
+            "type": "u64"
+          },
+          {
+            "name": "offeredAmount",
+            "type": "u64"
+          },
+          {
+            "name": "nftMetadata",
+            "type": "publicKey"
+          },
+          {
+            "name": "buyer",
+            "type": "publicKey"
+          },
+          {
+            "name": "seller",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MarketplaceState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "marketplaceOwner",
+            "type": "publicKey"
+          },
+          {
+            "name": "occsManager",
+            "type": "publicKey"
+          },
+          {
+            "name": "historyManager",
+            "type": "publicKey"
+          },
+          {
+            "name": "teamMultisigVault",
+            "type": "publicKey"
+          },
+          {
+            "name": "traderVault",
+            "type": "publicKey"
+          },
+          {
+            "name": "stakingVault",
+            "type": "publicKey"
+          },
+          {
+            "name": "accessManager",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserTradeStateMetadata",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "isClaimed",
+            "type": "bool"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidOptionRoyaltyValue",
+      "msg": "Invalid Option Royalty Value"
+    },
+    {
+      "code": 6001,
+      "name": "MinimumListingConstaint",
+      "msg": "Minimum Listing Constaint"
+    },
+    {
+      "code": 6002,
+      "name": "PubKeyMismatched",
+      "msg": "PubKey Mismatched"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidATA",
+      "msg": "Invalid ATA"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidOfferAmount",
+      "msg": "Invalid Offer Amount"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidListing",
+      "msg": "Invalid Listing"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidOffer",
+      "msg": "Invalid Offer"
+    },
+    {
+      "code": 6007,
+      "name": "InsufficientFunds",
+      "msg": "Insufficient Funds"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidTimestamp",
+      "msg": "Invalid Timestamp"
+    },
+    {
+      "code": 6009,
+      "name": "OfferExpired",
+      "msg": "Offer Expired"
+    },
+    {
+      "code": 6010,
+      "name": "TokenAccountNotInit",
+      "msg": "TokenAccount Not Init"
+    },
+    {
+      "code": 6011,
+      "name": "InvalidRewardClaimAccount",
+      "msg": "Invalid Reward Claim Account"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidClaimTimestamp",
+      "msg": "Invalid Claim Timestamp"
+    },
+    {
+      "code": 6013,
+      "name": "InvalidClaimAccount",
+      "msg": "Invalid Claim Account"
+    }
+  ]
+}
